@@ -168,19 +168,19 @@ const TEAMS=[['circuito','Circuito'],['nodo','Nodo'],['pulso','Pulso'],['cifra',
 const MAXT=5, TOTAL=40*60;
 
 const ROOMS=[
- {n:1,name:'Sala de servidores',tema:'Seguridad y contraseñas',ai:false,min:6,
+ {n:1,name:'Sala de servidores',tema:'Seguridad y contraseñas',ai:false,min:5,
   brief:'7:42 a. m. Alguien intentó entrar a las cuentas del proyecto Transcending Science 2027. Cada integrante revisa una evidencia distinta. Su fragmento es una parte de la clave que abre el siguiente cuarto.',
   clave:'Importan la longitud y lo impredecible más que los símbolos. Una contraseña distinta por cuenta, nunca compartida, y verificación en dos pasos.'},
  {n:2,name:'Sala de chat',tema:'Convivencia y bienestar digital',ai:false,min:5,
   brief:'8:05 a. m. El rumor ya llegó a los grupos de la escuela y empiezan las burlas. Hay que actuar con criterio, con respeto y cuidando las horas de pantalla.',
   clave:'Antes de reenviar, piensa en la persona. Guarda evidencia, reporta, apoya en privado y protege tu sueño con límites concretos de pantalla.'},
- {n:3,name:'Sala de prensa',tema:'Verificación de información y CRAAP',ai:false,min:7,
+ {n:3,name:'Sala de prensa',tema:'Verificación de información y CRAAP',ai:false,min:6,
   brief:'8:20 a. m. Circula este titular: «Unas bacterias de lodo darán luz gratis a toda la escuela». Evalúen las fuentes y verifiquen antes de compartir.',
   clave:'Lee más allá del titular, busca la fuente original y evalúa con CRAAP: Currency, Relevance, Authority, Accuracy y Purpose.'},
- {n:4,name:'Laboratorio',tema:'Árbol de decisiones · Transcending Science 2027',ai:false,min:7,
+ {n:4,name:'Laboratorio',tema:'Árbol de decisiones · Transcending Science 2027',ai:false,min:6,
   brief:'8:45 a. m. La dirección pide una respuesta técnica: ¿es viable la propuesta de celdas de combustible microbianas? Razonen como en un árbol de decisiones.',
   clave:'Un árbol conecta preguntas de Sí/No con consecuencias. Cada camino termina en una conclusión y una acción concreta.'},
- {n:5,name:'Centro de IA',tema:'Diseño de prompts y uso crítico de la IA',ai:true,min:8,
+ {n:5,name:'Centro de IA',tema:'Diseño de prompts y uso crítico de la IA',ai:true,min:7,
   brief:'9:10 a. m. El informe final se redactó con ayuda de una IA. Aquí sí pueden usarla, pero solo en el paso marcado. Después deben auditar lo que respondió.',
   clave:'La IA es una herramienta, no una fuente. Diseña prompts con rol, contexto y formato, verifica que las citas existan y declara que la usaste.'},
  {n:6,name:'Sala de mando',tema:'Cierre y reflexión',ai:false,min:4,
@@ -278,6 +278,95 @@ const QS={
   f:'Comparar exige criterios y ejemplos concretos. «Más bonito» o «más información» no demuestran calidad. Además, la comparación debe escribirla el equipo, no la IA.'}
 ]};
 
+
+/* Segunda pregunta de cada persona: nivel reflexivo (analizar y evaluar). */
+const QB={
+1:[
+ {t:'s',ctx:'El equipo de Transcending Science necesita compartir el acceso a una cuenta del proyecto. Cuatro compañeros proponen cómo hacerlo.',q:'¿Qué propuesta reduce más el riesgo sin volver imposible el trabajo en equipo?',
+  o:['Guardar la clave en un documento compartido llamado «claves» al que todos tengan acceso','Usar un gestor de contraseñas con una carpeta compartida solo para ese proyecto y activar la verificación en dos pasos','Usar una misma contraseña maestra para todas las cuentas del equipo para que nadie la olvide','Anotarla en una libreta que quede pegada al monitor del laboratorio para que siempre esté a la mano'],a:1,
+  f:'Un gestor con acceso compartido y verificación en dos pasos permite colaborar sin repartir la clave en texto plano ni reutilizarla. Un documento abierto, una clave maestra repetida o una nota visible concentran el riesgo en un solo punto fácil de filtrar.'},
+ {t:'m',ctx:'Una compañera dice: «Ya activé la verificación en dos pasos, así que puedo usar la misma contraseña en todos mis sitios».',q:'Evalúa las afirmaciones y marca TODAS las verdaderas.',
+  o:['Agrega una barrera aunque alguien consiga tu contraseña','Un código generado por una app autenticadora suele ser más seguro que uno enviado por SMS','Con verificación en dos pasos ya no importa repetir la contraseña en otros sitios','Compartir el código que te llega con quien «te está ayudando» anula la protección','Solo es útil para cuentas bancarias'],a:[0,1,3],
+  f:'La verificación en dos pasos suma una barrera, pero no reemplaza una contraseña distinta por cuenta. El código es personal: si lo compartes, quien lo recibe entra como tú. Sirve para cualquier cuenta con datos que quieras proteger, no solo la bancaria.'},
+ {t:'s',ctx:'Se filtraron las contraseñas de un sitio de recetas pequeño. Un compañero usaba esa misma contraseña en su cuenta de Schoology y alguien entró a ella.',q:'¿Qué análisis explica mejor lo ocurrido?',
+  o:['Los atacantes prueban en otros servicios las credenciales filtradas, porque mucha gente repite su contraseña','Schoology comparte su base de datos con todos los sitios de internet, por eso se filtró también','Las contraseñas largas se filtran con más frecuencia que las cortas','No hubo relación: un sitio pequeño nunca puede afectar cuentas de otro servicio'],a:0,
+  f:'Los atacantes automatizan el uso de credenciales filtradas en otros servicios. Por eso la medida clave es una contraseña distinta por cuenta; el tamaño del sitio filtrado no cambia el riesgo.'},
+ {t:'s',ctx:'Un alumno dice: «No tengo nada importante en mi cuenta, a nadie le interesaría hackearla».',q:'¿Cuál es el mejor contraargumento?',
+  o:['Tu cuenta puede usarse para suplantarte, escribir a tus contactos o entrar a los grupos del salón; el valor está en el acceso que da, no solo en tu contenido','Tiene razón: solo se atacan cuentas de personas famosas o de empresas grandes','Solo importa proteger la cuenta si en ella guardas datos bancarios o de pago','Hay que cambiar la contraseña todos los días aunque sea por una parecida'],a:0,
+  f:'Una cuenta comprometida sirve para suplantar, estafar a contactos o entrar a otros espacios. El riesgo no depende de lo famoso que seas. Cambiar la clave a diario por una parecida no mejora la seguridad.'},
+ {t:'m',ctx:'Mañana hay quiz con LockDown Browser. Una compañera propone: «Mejor lo instalo en la escuela mañana temprano».',q:'¿Qué riesgos evitas al instalarlo hoy en casa y probarlo? Marca TODOS los que apliquen.',
+  o:['Que falle el internet o falten permisos de instalación justo antes del quiz','Quedarte sin poder presentar y perder esa evaluación','Descubrir con tiempo si tu equipo es compatible y pedir ayuda','Que el navegador normal deje de funcionar para siempre','Que el docente te asigne puntos extra por haberlo instalado'],a:[0,1,2],
+  f:'Probarlo con anticipación te deja margen para resolver fallas de red, permisos o compatibilidad. No afecta tu navegador habitual y no da puntos extra; la ventaja es poder presentar sin contratiempos.'}
+],
+2:[
+ {t:'s',ctx:'Un compañero publicó en el grupo una opinión polémica sobre un reglamento escolar y recibe ataques. Tú piensas distinto a él.',q:'¿Qué respuesta mantiene el respeto y aporta a la conversación?',
+  o:['Expresar tu desacuerdo con argumentos, sin atacar a la persona, o no participar si el tono es hostil','Unirte a las burlas para que no te vean como el único que piensa diferente','Escribir en mayúsculas tu opinión para que se note que estás en desacuerdo','Reportar su publicación como falsa para que la borren aunque no lo sea'],a:0,
+  f:'Se puede disentir sin atacar: se debate la idea, no a la persona. Sumarte a las burlas, gritar en mayúsculas o hacer un reporte falso dañan a alguien y empeoran el ambiente.'},
+ {t:'s',ctx:'Tu hermano menor subió al chat familiar fotos tuyas que no querías compartir, sin preguntarte.',q:'¿Qué principio de convivencia digital está en juego y cómo actúas?',
+  o:['Consentimiento y privacidad: le pides que las borre, le explicas por qué y acuerdan pedir permiso antes de publicar','Ninguno, porque es tu familia y en familia todo se puede compartir','Publicar fotos de él para quedar a mano','Bloquear a toda tu familia para que no vuelva a pasar'],a:0,
+  f:'Las imágenes de una persona se comparten con su consentimiento, aunque sea familia. Lo constructivo es pedir que se borren y acordar una regla clara; la venganza o el bloqueo total no resuelven el problema.'},
+ {t:'m',ctx:'Revisas tu registro semanal: 7 horas diarias de pantalla recreativa, 5 horas y media de sueño y calificaciones a la baja.',q:'¿Qué cambios son razonables y medibles? Marca TODOS los que apliquen.',
+  o:['Dejar el celular fuera de la cama y usar alarma tradicional','Definir un límite diario de pantalla y revisar la meta cada semana','Pasar de 7 horas a cero desde mañana','Silenciar notificaciones durante el tiempo de tarea','Prometer que «me voy a portar mejor»'],a:[0,1,3],
+  f:'Los cambios útiles son concretos y verificables (celular fuera de la cama, límite diario revisado, notificaciones silenciadas al estudiar). Pasar de 7 horas a cero rara vez dura, y una promesa vaga no se puede medir.'},
+ {t:'s',ctx:'Un compañero te escribe en privado: «Ya no aguanto, siento que nadie me habla en el grupo».',q:'¿Cuál es la respuesta más cuidadosa?',
+  o:['Escucharlo sin minimizar lo que siente, ofrecer tu compañía y animarlo a hablar con un adulto de confianza; avisar al orientador si ves que está mal','Decirle que exagera, que a todos les pasa algo parecido','Compartir su mensaje en el grupo para que los demás lo ayuden','No responder para no meterte en problemas'],a:0,
+  f:'Escuchar, validar lo que siente y acercarlo a un adulto de confianza es lo más cuidadoso. Minimizar, exponerlo en el grupo o ignorarlo puede empeorar su situación.'},
+ {t:'s',ctx:'Circulan fotos de las notas de una compañera. Quien las publicó dice: «Era una broma, no se tiene que enojar».',q:'¿Qué criterio es más útil para distinguir una broma de un acoso?',
+  o:['Si la persona afectada lo vive como daño o no puede detenerlo, es acoso aunque quien lo hizo diga que era broma','Si hay risas en el grupo, es una broma','Si pasa en línea, no cuenta como acoso','Solo es acoso cuando hay golpes'],a:0,
+  f:'Lo que define el acoso es el efecto en la persona y la falta de control sobre la situación, no la intención declarada. Las risas del grupo o el medio digital no lo justifican.'}
+],
+3:[
+ {t:'s',ctx:'Un artículo de 2012 en una revista arbitrada describe una técnica de celdas microbianas y es muy citado. Hoy hay estudios más recientes con otros resultados.',q:'Aplicando CRAAP, ¿qué decisión es más razonable?',
+  o:['Usarlo con cuidado: tiene Authority y Accuracy altas, pero su Currency es baja; complementarlo con estudios recientes','Descartarlo solo porque tiene más de diez años','Usarlo sin más revisión porque está muy citado','Ignorar la fecha porque los criterios CRAAP no importan en artículos científicos'],a:0,
+  f:'CRAAP no se aplica de forma mecánica: una fuente puede ser sólida en Authority y Accuracy y débil en Currency. Lo razonable es usarla con contexto y contrastarla con evidencia actual.'},
+ {t:'s',ctx:'Encuentras el mismo dato en dos lugares: un blog de divulgación con referencias bien enlazadas y un sitio sin autor con cifras más impactantes y sin fuentes.',q:'¿Cuál priorizas y con qué criterios?',
+  o:['El blog con referencias, porque su Accuracy y Authority se pueden comprobar siguiendo los enlaces','El sitio sin autor, porque sus cifras llaman más la atención y se recuerdan mejor','Ninguno, porque ningún sitio de internet puede evaluarse','El que aparezca primero en el buscador, porque seguro es el más confiable'],a:0,
+  f:'Una fuente con referencias verificables permite comprobar el dato y evaluar su calidad. Que una cifra impacte o que aparezca primero en el buscador no prueba que sea confiable.'},
+ {t:'m',ctx:'Te llega este titular: «Un estudio demuestra que bacterias del lodo pueden iluminar una casa entera».',q:'¿Qué preguntas harías antes de compartirlo? Marca TODAS las que sirvan.',
+  o:['¿Dónde se publicó el estudio y quién lo realizó?','¿Cuánta energía produjo realmente y en qué condiciones?','¿Cuántas reacciones tiene la publicación en redes?','¿Otras fuentes confiables reportan el mismo resultado?','¿El titular está escrito con letras llamativas?'],a:[0,1,3],
+  f:'Verificar implica identificar al autor, revisar los datos y condiciones del experimento y contrastar con otras fuentes independientes. La popularidad o el diseño del titular no dicen nada sobre su veracidad.'},
+ {t:'s',ctx:'Una nota viral afirma: «Expertos de una universidad aseguran que esta batería bacteriana revolucionará la energía». No menciona nombres ni enlaces.',q:'¿Qué problema detectas con CRAAP y qué haces?',
+  o:['Authority: no se puede verificar quiénes son; busco el estudio o los nombres originales y, si no aparecen, la descarto','Currency: la nota es antigua; la uso de todos modos','Relevance: no es de ciencia, así que no importa quién la firme','Purpose: informar siempre es neutro, por lo que no necesito revisar nada más'],a:0,
+  f:'«Expertos de una universidad» sin nombre ni enlace no permite comprobar la Authority. Lo correcto es buscar la fuente original y, si no existe, no usar la nota.'},
+ {t:'s',ctx:'Una empresa que vende baterías publica un «estudio» que concluye que su producto es el mejor del mercado.',q:'¿Cómo evalúas esa fuente?',
+  o:['Puede traer datos útiles, pero su propósito comercial sesga la conclusión; los contrasto con fuentes independientes','Es totalmente confiable porque la empresa es la que más sabe del producto','Es falsa automáticamente porque la empresa vende lo que evalúa','No se puede evaluar porque está publicada en internet'],a:0,
+  f:'Un propósito comercial no vuelve falsa una fuente, pero sí exige contrastar sus afirmaciones con evidencia independiente. Ni la confianza ciega ni el rechazo automático son criterios válidos.'}
+],
+4:[
+ {t:'s',ctx:'Tu árbol dice: «¿Genera energía? Sí → ¿Es barata? Sí → Alta viabilidad». No tiene ramas de aceptación social ni de impacto ambiental.',q:'¿Qué riesgo tiene esa conclusión?',
+  o:['Sobreestimar la viabilidad: la propuesta podría generar energía barata y aun así ser rechazada o dañar el entorno','Ninguno, porque la energía y el costo son lo único que define la viabilidad','Subestimarla, porque esas ramas siempre bajarían la viabilidad','Que el árbol quede demasiado corto para presentarse'],a:0,
+  f:'Una conclusión de alta viabilidad sin revisar aceptación social e impacto ambiental puede ser engañosa. Esas ramas no siempre bajan la viabilidad, pero hacen la conclusión más honesta.'},
+ {t:'s',ctx:'Datos del laboratorio: cada celda produce 0.6 V y cuesta 40 pesos. Un LED necesita unos 2 V. Conectan 4 celdas en serie.',q:'¿Qué afirmación se desprende mejor de los datos?',
+  o:['Es técnicamente posible porque 4 × 0.6 = 2.4 V supera los 2 V, pero hay que evaluar si 160 pesos es competitivo para el alcance del proyecto','No es posible, porque una celda sola no alcanza los 2 V','Es viable sin más análisis porque 2.4 V es mayor que 2 V','No se puede concluir nada hasta tener 100 celdas'],a:0,
+  f:'En serie los voltajes se suman: 4 × 0.6 = 2.4 V, suficiente para el LED. Eso responde a la rama técnica, pero la rama de costos (4 × 40 = 160 pesos) sigue pendiente de evaluar.'},
+ {t:'m',ctx:'Tu equipo clasifica una rama como «baja viabilidad» porque la respuesta a «¿se puede ampliar su uso?» fue No.',q:'¿Qué debe incluir ese camino para que sea útil? Marca TODO lo que corresponda.',
+  o:['Una conclusión que explique la causa del No','Una acción concreta, como mejorar, replantear o detener con evidencia','Un criterio verificable para volver a decidir más adelante','Quitar la rama para que el árbol se vea más positivo','Una frase general como «ojalá mejore»'],a:[0,1,2],
+  f:'Cada camino debe cerrar con una conclusión y una acción concreta. Ocultar las ramas negativas o dejar frases vagas le quita valor de decisión al árbol.'},
+ {t:'s',ctx:'Un compañero dice: «El árbol es un adorno; con saber si la propuesta funciona o no, ya basta».',q:'¿Cuál es el mejor argumento a favor del árbol de decisiones?',
+  o:['Hace explícitas las condiciones y consecuencias de cada decisión, por lo que se puede ver por qué se concluye algo y discutirlo','Hace que el trabajo se vea más profesional ante el docente','Reemplaza la necesidad de hacer experimentos o buscar datos','Permite elegir la respuesta que más nos convenga'],a:0,
+  f:'Su valor está en dejar visible el razonamiento: qué se preguntó, qué se respondió y a qué conduce. No sustituye los datos ni sirve para justificar lo que ya queríamos concluir.'},
+ {t:'s',ctx:'Una pregunta de tu árbol dice: «¿Es barata y se puede ampliar?». Dos ramas contradictorias parten de ella.',q:'¿Cómo la corriges?',
+  o:['Separarla en dos preguntas de Sí/No, una por cada criterio','Quitar la palabra «barata» para que sea más corta','Dejarla igual y agregar una tercera rama para el «tal vez»','Responder siempre Sí para evitar la contradicción'],a:0,
+  f:'Una pregunta de decisión debe medir un solo criterio. Si mezcla dos, la respuesta Sí/No es ambigua y las ramas se contradicen.'}
+],
+5:[
+ {t:'s',ctx:'La IA te dio tres fuentes. La primera tiene un enlace que no abre y un autor sin institución.',q:'¿Cuál es el siguiente paso más sólido?',
+  o:['Buscar el título y el autor en un buscador académico; si no aparece, descartarla y buscar otra','Dejarla porque la IA suele acertar con las fuentes','Borrar el enlace y citarla igual con el título que dio la IA','Pedirle a la misma IA que confirme que la fuente existe'],a:0,
+  f:'Hay que verificar fuera de la IA. Preguntarle a la misma herramienta si su fuente existe es circular: puede confirmar una cita inventada.'},
+ {t:'s',ctx:'Un compañero escribió «hazme mi árbol de decisiones» en una IA y entregó el resultado sin cambios.',q:'¿Qué se pierde con ese uso?',
+  o:['Se pierde el razonamiento propio y no se detectan errores; la tarea pide comprender y comprobar, no solo obtener un producto','Nada, porque el resultado fue correcto y eso es lo que importa','Solo se pierde tiempo, porque el docente no puede distinguir quién lo hizo','Se pierde únicamente la presentación visual del árbol'],a:0,
+  f:'El objetivo es desarrollar criterio. Entregar sin revisar elimina justo lo que se evalúa: entender cada decisión, comprobar el contenido y corregir errores.'},
+ {t:'m',ctx:'El prompt de un equipo dice solamente: «Hazme las preguntas del árbol».',q:'¿Qué mejoras aplicarías? Marca TODAS las que sirvan.',
+  o:['Indicar el proyecto y el tema concreto','Pedir preguntas que se respondan con Sí o No, separadas por escenario','Pedir que justifique cada pregunta y que avise si no está seguro','Pedir que sea «lo más largo posible»','Quitar el contexto para que sea más general'],a:[0,1,2],
+  f:'Un buen prompt incluye contexto, formato claro y límites de honestidad. Pedir mucha longitud o quitar el contexto empeora la calidad y la precisión.'},
+ {t:'s',ctx:'Repites el mismo prompt en la IA y obtienes dos respuestas distintas, con fuentes diferentes.',q:'¿Qué implica eso para tu trabajo?',
+  o:['Que sus respuestas pueden variar, por lo que debes verificar con fuentes reales en lugar de confiar en una sola salida','Que una de las dos respuestas es la correcta y la otra incorrecta','Que la IA se descompuso y no se puede usar','Que conviene quedarte con la primera porque es la más confiable'],a:0,
+  f:'Los modelos generan texto con cierta variación; coincidencia entre intentos no garantiza verdad ni diferencia garantiza error. La verificación externa es lo que da confianza.'},
+ {t:'s',ctx:'Debes declarar si usaste IA. Un compañero opina: «Mejor no digo nada, así no me bajan puntos».',q:'¿Por qué conviene declararlo?',
+  o:['Es transparencia académica: permite evaluar tu criterio sobre lo que generó la IA y evita sospechas de plagio','Porque así el docente siempre te dará todos los puntos','Porque la IA exige que se le dé crédito en todas sus respuestas','No conviene: es mejor ocultarlo si el trabajo quedó bien'],a:0,
+  f:'Declarar el uso muestra honestidad y deja evaluar tu juicio sobre el resultado. Ocultarlo pone en duda la autoría de todo el trabajo.'}
+]};
+
 /* ===================== UTILIDADES ===================== */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -291,18 +380,27 @@ const teamName=tid=>(TEAMS.find(t=>t[0]===tid)||[0,tid])[1];
 
 /* ===================== ESTADO ===================== */
 const S={db:null,uid:null,sid:null,master:null,isOwner:false,view:'boot',players:{},att:{},tmp:{},localRoom:0,localNote:false,
-  sig:'',err:'',doorMsg:'',joinMsg:'',confirmReset:false,open:{},seen:0,loadNote:false};
+  sig:'',qi:{},err:'',doorMsg:'',joinMsg:'',confirmReset:false,open:{},seen:0,loadNote:false};
 
 
 function teamList(tid){return (S.players[tid]||[]).slice().sort((a,b)=>((a.v||0)-(b.v||0))||(a.id<b.id?-1:1))}
 function findMe(){for(const t of TEAMS){const p=(S.players[t[0]]||[]).find(x=>x.id===S.uid);if(p)return{tid:t[0],p}}return null}
 function curRoom(me){return Math.min(6,Math.max(me.p.room||1,S.localRoom||1))}
-function myQ(r,me){return QS[r][(me.p.v||0)%5]}
+function myQ(r,me,i){const v=(me.p.v||0)%5;return (i?QB:QS)[r][v]}
+function qres(me,cr,i){return (me.p.res||{})['r'+cr+'q'+i]||att(cr+'.'+i).rec}
+function roomDone(p,r){return r>5?!!p.done:[0,1].every(i=>(p.res||{})['r'+r+'q'+i])}
+function roomDoneLocal(me,cr){return [0,1].every(i=>qres(me,cr,i))}
+function qiNow(me,cr){let i=S.qi[cr];if(i==null){i=[0,1].findIndex(k=>!(me.p.res||{})['r'+cr+'q'+k]);if(i<0)i=1;S.qi[cr]=i}return i}
+function teamTotals(){return TEAMS.map(([id,nm])=>{const L=S.players[id]||[];const pts=L.reduce((a,p)=>a+ptsOf(p),0);return{id,nm,n:L.length,pts,max:L.length*100,avg:L.length?pts/L.length:0,done:L.filter(p=>p.done).length}}).filter(x=>x.n)}
+function setNotice(me){
+  if(!me){S.notice='';return}
+  S.notice=me.p.done?'Ya terminaste Código Rojo Digital. Aquí puedes revisar tu retroalimentación.':'Ya habías entrado. Retomas tu avance en el cuarto '+Math.min(6,curRoom(me))+'.';
+}
 function ownedFrags(tid){const L=teamList(tid),n=L.length||1,idx=L.findIndex(x=>x.id===S.uid);const o=[];for(let i=0;i<5;i++)if(i%n===idx)o.push(i);return o}
 function ptsOf(p){return Object.values(p.res||{}).reduce((a,r)=>a+(r.pts||0),0)}
 function secsOf(p){return Object.values(p.res||{}).reduce((a,r)=>a+(r.sec||0),0)}
 function teamStart(tid){const L=S.players[tid]||[];return L.length?Math.min(...L.map(p=>p.joinedAt||Date.now())):Date.now()}
-function att(r){return S.att[r]||(S.att[r]={tries:0,t0:Date.now(),sel:[],order:null,off:null,msg:'',rec:null})}
+function att(key){return S.att[key]||(S.att[key]={tries:0,t0:Date.now(),sel:[],order:null,off:null,msg:'',rec:null,just:''})}
 function permFor(q,r){let p=shuf(q.o.length,hash(S.uid+'|'+r));if(q.t==='o'&&p.every((x,i)=>x===i))p.push(p.shift());return p}
 function ansText(q){if(q.t==='s')return q.o[q.a];if(q.t==='m')return q.a.map(i=>q.o[i]).join(' · ');return q.o.map((x,i)=>(i+1)+'. '+x).join(' → ')}
 
@@ -330,35 +428,41 @@ function renderAll(){
 }
 function renderHdr(){
   const me=findMe();if(!me)return;
+  const L=teamList(me.tid),tot=L.reduce((a,p)=>a+ptsOf(p),0);
   $('#hdr').innerHTML=`<div class="bar"><div class="brand"><b>CÓDIGO ROJO DIGITAL</b><span>Equipo ${esc(teamName(me.tid))} · Cultura digital I</span></div>
+  <div class="clock"><span>Puntos del equipo</span><b class="mono" id="tpts">${tot}<small style="font-size:14px;color:var(--muted)"> / ${L.length*100}</small></b></div>
   <div class="clock" id="clk"><span>Tiempo del equipo</span><b class="mono" id="tm">--:--</b></div>
   <div class="who"><span>${esc(me.p.name)}</span>${S.isOwner?'<button class="mini" data-act="teacher">Panel docente</button>':''}</div></div>`;
 }
 function renderStepper(){
   const me=findMe();if(!me)return;const cr=curRoom(me);
   $('#stepper').innerHTML=ROOMS.map(r=>{
-    const done=r.n<6?!!(me.p.res||{})['r'+r.n]:!!me.p.done;
+    const done=roomDone(me.p,r.n);
     const cls=done&&r.n!==cr?'done':r.n===cr?'cur':(r.n<cr?'done':'lock');
     return `<div class="st ${cls}" ${r.n===cr?'aria-current="step"':''}><b>${r.n===6?'FIN':r.n}</b><span>${esc(r.name)}</span></div>`}).join('');
 }
 function renderSide(){
   const me=findMe();if(!me||!$('#side'))return;
   const L=teamList(me.tid),n=L.length,cr=curRoom(me);
-  const total=L.reduce((a,p)=>a+ptsOf(p),0);
-  let h=`<div class="card"><h3>Tu equipo</h3><ul class="mem">`+L.map(p=>{
-    const you=p.id===S.uid,pr=p.room||1,res=p.res||{};
-    const status=p.done?'terminó':(pr===cr&&res['r'+cr]?'clave lista':'cuarto '+Math.min(pr,6));
-    return `<li><div class="nm"><span style="font:600 16px var(--body);color:var(--ink)">${esc(p.name)}${you?' (tú)':''}</span><span>${status}</span></div><div class="pips">${[1,2,3,4,5].map(i=>`<i class="${res['r'+i]?'on':(i===pr&&!p.done?'cur':'')}"></i>`).join('')}</div></li>`}).join('')+`</ul>`;
+  const total=L.reduce((a,p)=>a+ptsOf(p),0),mine=L.find(p=>p.id===S.uid)||me.p;
+  let h=`<div class="card"><h3>Puntos del equipo</h3><div class="big mono">${total}</div><p class="msg">de ${n*100} posibles · tú llevas <b class="mono">${ptsOf(mine)}</b> de 100</p></div>`;
+  h+=`<div class="card"><h3>Tu equipo</h3><ul class="mem">`+L.map(p=>{
+    const you=p.id===S.uid,pr=p.room||1;
+    const status=p.done?'terminó':(pr===cr&&roomDone(p,cr)?'clave lista':'cuarto '+Math.min(pr,6));
+    return `<li><div class="nm"><span style="font:600 16px var(--body);color:var(--ink)">${esc(p.name)}${you?' (tú)':''}</span><span>${ptsOf(p)} pts</span></div><div class="msg" style="font-size:12px">${status}</div><div class="pips">${[1,2,3,4,5].map(i=>`<i class="${roomDone(p,i)?'on':(i===pr&&!p.done?'cur':'')}"></i>`).join('')}</div></li>`}).join('')+`</ul>`;
   if(n<2)h+=`<p class="msg" style="margin-top:10px">Esperando a tu equipo. Cada integrante recibe un caso distinto.</p>`;
   h+=`</div>`;
   if(cr<=5){
-    const mine=ownedFrags(me.tid),rec=(me.p.res||{})['r'+cr]||att(cr).rec;
+    const own=ownedFrags(me.tid),ready=roomDoneLocal(me,cr);
     h+=`<div class="card"><h3>Clave del cuarto ${cr+1}</h3><p class="msg">Cada letra la tiene una persona distinta. Júntenlas en orden.</p><div class="frag">`+
-      [0,1,2,3,4].map(i=>{const own=L[i%n];const isMine=mine.includes(i);const show=isMine&&rec;
-        return `<div class="slot ${show?'mine':''}" title="Posición ${i+1}: ${esc(own?own.name:'')}"><small>${i+1}</small>${show?esc(pw(me.tid,cr)[i]):'?'}</div>`}).join('')+`</div>
+      [0,1,2,3,4].map(i=>{const o=L[i%n];const isMine=own.includes(i);const show=isMine&&ready;
+        return `<div class="slot ${show?'mine':''}" title="Posición ${i+1}: ${esc(o?o.name:'')}"><small>${i+1}</small>${show?esc(pw(me.tid,cr)[i]):'?'}</div>`}).join('')+`</div>
       <p class="msg">${[0,1,2,3,4].map(i=>`${i+1}: ${esc(((L[i%n]||{}).name||'').split(' ')[0])}`).join(' · ')}</p></div>`;
   }
-  h+=`<div class="card"><h3>Puntos</h3><div class="big mono">${total}</div><p class="msg">de ${n*50} posibles entre ${n} integrante${n===1?'':'s'}</p></div>`;
+  const tt=teamTotals().sort((a,b)=>b.avg-a.avg);
+  if(tt.length>1){
+    h+=`<div class="card"><h3>Marcador</h3><p class="msg">Ordenado por promedio de puntos por integrante.</p><table><tbody>`+tt.map(t=>`<tr${t.id===me.tid?' style="font-weight:700"':''}><td>${esc(t.nm)}</td><td class="mono">${t.pts}</td><td class="mono" style="color:var(--muted)">${t.avg.toFixed(0)} prom.</td></tr>`).join('')+`</tbody></table></div>`;
+  }
   $('#side').innerHTML=h;
 }
 function tick(){
@@ -377,7 +481,7 @@ function joinHTML(){
    <div><b>Cada quien, su caso</b>Cada integrante responde un caso distinto en su dispositivo.</div>
    <div><b>La clave se arma entre todos</b>Cada respuesta revela una letra. La puerta solo abre con la clave completa.</div>
    <div><b>Sin IA en los cuartos 1 a 4</b>En el Cuarto 5 la IA se usa solo en el paso que se indica.</div>
-   <div><b>Puntos</b>10 puntos al primer intento, 5 al segundo. Al final verás retroalimentación de cada respuesta.</div>
+   <div><b>Reflexiona</b>Cada cuarto tiene 2 preguntas y debes explicar por qué elegiste tu respuesta. 10 puntos al primer intento, 5 al segundo.</div>
   </div>${errBox()}`;
   if(!S.uid){
     return head+`<label class="lb" for="nm">Tu nombre y primer apellido, como aparecen en Schoology</label>
@@ -397,34 +501,42 @@ function renderTeams(){
 
 /* ---- cuarto ---- */
 function stageHTML(me){
+  return (S.notice?`<div class="fb ok" role="status" style="margin:0 0 14px"><p>${esc(S.notice)}</p></div>`:'')+stageHTML0(me);
+}
+function stageHTML0(me){
   const cr=curRoom(me),R=ROOMS[cr-1];
   let h=`<div class="roomhead"><span class="num" aria-hidden="true">${cr}</span><h2>${esc(R.name)}</h2><p class="tema">${esc(R.tema)}</p><p class="brief">${esc(R.brief)}</p>
-   <div class="tags"><span class="tag ${R.ai?'ai':'noai'}">${R.ai?'IA DIRIGIDA: SOLO EN EL PASO 1':'SIN IA EN ESTE CUARTO'}</span><span class="tag">≈ ${R.min} MIN</span></div></div>`;
+   <div class="tags"><span class="tag ${R.ai?'ai':'noai'}">${R.ai?'IA DIRIGIDA: SOLO EN EL PASO 1':'SIN IA EN ESTE CUARTO'}</span><span class="tag">2 PREGUNTAS</span><span class="tag">≈ ${R.min} MIN</span></div></div>`;
   if(cr===6)return h+finalHTML(me);
-  const a=att(cr),rec=(me.p.res||{})['r'+cr]||a.rec,q=myQ(cr,me);
-  if(R.ai&&!(me.p.ainote||S.localNote)&&!rec)return h+aiStepHTML();
-  h+=`<div class="card q"><h3>${R.ai?'Paso 2 · Audita a la IA':'Tu caso'}</h3>`;
+  const solved=roomDoneLocal(me,cr);
+  if(R.ai&&!(me.p.ainote||S.localNote)&&!solved)return h+aiStepHTML();
+  const qi=qiNow(me,cr),key=cr+'.'+qi,a=att(key),rec=qres(me,cr,qi),q=myQ(cr,me,qi);
+  h+=`<div class="card q"><div class="row" style="margin:0 0 8px"><span class="tag">PREGUNTA ${qi+1} DE 2</span>${qi===1?'<span class="tag ai">NIVEL REFLEXIVO</span>':''}</div><h3>${R.ai?'Paso 2 · Audita a la IA':'Tu caso'}</h3>`;
   if(q.ctx)h+=`<div class="ctx">${esc(q.ctx)}</div>`;
   h+=`<p class="ask">${esc(q.q)}</p>`;
   if(q.t==='o'){
-    const ord=a.order||(a.order=permFor(q,cr));
+    const ord=a.order||(a.order=permFor(q,key));
     h+=`<ol class="ord">`+ord.map((orig,i)=>`<li><span class="n">${i+1}</span><span class="t">${esc(q.o[orig])}</span>${rec?'':`<span class="mv"><button data-act="mv" data-i="${i}" data-d="-1" aria-label="Subir">▲</button><button data-act="mv" data-i="${i}" data-d="1" aria-label="Bajar">▼</button></span>`}</li>`).join('')+`</ol>`;
   }else{
-    const perm=permFor(q,cr),right=q.t==='s'?[q.a]:q.a;
+    const perm=permFor(q,key),right=q.t==='s'?[q.a]:q.a;
     h+=`<div class="opts">`+perm.map((orig,d)=>{const on=a.sel.includes(orig);
       return `<button class="opt${on&&!rec?' on':''}${rec&&right.includes(orig)?' good':''}" data-act="pick" data-i="${orig}" aria-pressed="${on}" ${(a.off===orig||rec)?'disabled':''}><span class="k">${'ABCDE'[d]}</span><span>${esc(q.o[orig])}</span></button>`}).join('')+`</div>`;
   }
   if(!rec){
-    h+=`<div class="row"><button class="btn go" data-act="check">Comprobar · intento ${a.tries+1} de 2</button><span class="msg ${a.msg?'bad':''}" aria-live="polite">${esc(a.msg||(q.t==='m'?'Puede haber varias correctas.':q.t==='o'?'Usa las flechas para ordenar.':''))}</span></div>`;
+    h+=`<label class="lb" for="just">¿Por qué? Explica con tus palabras el razonamiento detrás de tu respuesta (mínimo 8 palabras)</label>
+    <textarea id="just" data-just="${key}" placeholder="Elegí esta opción porque... y descarté las demás porque...">${esc(a.just||'')}</textarea>
+    <div class="row"><button class="btn go" data-act="check">Comprobar · intento ${a.tries+1} de 2</button><span class="msg ${a.msg?'bad':''}" aria-live="polite">${esc(a.msg||(q.t==='m'?'Puede haber varias correctas.':q.t==='o'?'Usa las flechas para ordenar.':''))}</span></div>`;
   }else{
-    h+=`<div class="fb ${rec.ok?'ok':'no'}"><h4>${rec.ok?`Correcto · +${rec.pts} puntos`:'Esta vez no sumó puntos'}</h4><p>${esc(q.f)}</p>${rec.ok?'':`<p class="ans"><b>Respuesta correcta:</b> ${esc(ansText(q))}</p>`}</div>`;
+    h+=`<div class="quote" style="margin-top:12px"><b>Tu justificación:</b> ${esc(rec.just||a.just||'')}</div>
+    <div class="fb ${rec.ok?'ok':'no'}"><h4>${rec.ok?`Correcto · +${rec.pts} puntos`:'Esta vez no sumó puntos'}</h4><p>${esc(q.f)}</p>${rec.ok?'':`<p class="ans"><b>Respuesta correcta:</b> ${esc(ansText(q))}</p>`}</div>`;
+    if(qi<1)h+=`<div class="row"><button class="btn go" data-act="nextq">Siguiente pregunta</button></div>`;
   }
   h+=`</div>`;
-  if(rec){
-    const mine=ownedFrags(me.tid);
-    h+=`<div class="card"><h3>Tu parte de la clave</h3>`;
-    if(mine.length){
-      h+=`<p class="msg">Díctala a tu equipo en voz alta o enséñasela. No la escribas en el chat de otros equipos.</p><div class="frag">`+mine.map(i=>`<div class="slot mine"><small>${i+1}</small>${esc(pw(me.tid,cr)[i])}</div>`).join('')+`</div>`;
+  if(rec&&solved){
+    const own=ownedFrags(me.tid),roomPts=[0,1].reduce((x,i)=>x+((qres(me,cr,i)||{}).pts||0),0);
+    h+=`<div class="card"><h3>Tu parte de la clave</h3><p class="msg">Terminaste el cuarto con ${roomPts} de 20 puntos.</p>`;
+    if(own.length){
+      h+=`<p class="msg">Díctala a tu equipo en voz alta o enséñasela. No la escribas en el chat de otros equipos.</p><div class="frag">`+own.map(i=>`<div class="slot mine"><small>${i+1}</small>${esc(pw(me.tid,cr)[i])}</div>`).join('')+`</div>`;
     }
     h+=`<div class="door ${S.shake?'shake':''}" style="margin-top:14px"><label class="lb" for="doorIn" style="margin-top:0">Clave completa para abrir el cuarto ${cr+1} (5 caracteres)</label>
       <div class="row" style="margin-top:0"><input id="doorIn" maxlength="5" autocomplete="off" autocapitalize="characters" spellcheck="false" value="${esc(S.tmp.door||'')}" data-in="door"><button class="btn go" data-act="door">Abrir puerta</button></div>
@@ -445,9 +557,11 @@ function aiStepHTML(){
 }
 function finalHTML(me){
   const L=teamList(me.tid);
-  let h=`<div class="card q"><h3>Tu retroalimentación</h3><p class="msg">Primero lo que conviene repasar.</p>`;
-  const items=[1,2,3,4,5].map(r=>({r,q:myQ(r,me),rec:(me.p.res||{})['r'+r]})).sort((x,y)=>((x.rec&&x.rec.ok)?1:0)-((y.rec&&y.rec.ok)?1:0));
-  h+=items.map(({r,q,rec})=>`<div class="fb ${rec&&rec.ok?'ok':'no'}"><h4>Cuarto ${r} · ${esc(ROOMS[r-1].tema)} · ${rec?(rec.ok?'+'+rec.pts+' pts':'0 pts'):'—'}</h4><p>${esc(q.f)}</p>${rec&&!rec.ok?`<p class="ans"><b>Respuesta correcta:</b> ${esc(ansText(q))}</p>`:''}</div>`).join('');
+  let h=`<div class="card q"><h3>Tu retroalimentación</h3><p class="msg">Primero lo que conviene repasar. Compara tu justificación con la explicación.</p>`;
+  const items=[];
+  for(let r=1;r<=5;r++)for(let i=0;i<2;i++)items.push({r,i,q:myQ(r,me,i),rec:(me.p.res||{})['r'+r+'q'+i]});
+  items.sort((x,y)=>((x.rec&&x.rec.ok)?1:0)-((y.rec&&y.rec.ok)?1:0));
+  h+=items.map(({r,i,q,rec})=>`<div class="fb ${rec&&rec.ok?'ok':'no'}"><h4>Cuarto ${r} · pregunta ${i+1} · ${rec?(rec.ok?'+'+rec.pts+' pts':'0 pts'):'sin responder'}</h4><p><b>${esc(ROOMS[r-1].tema)}</b></p>${rec&&rec.just?`<div class="quote"><b>Tu justificación:</b> ${esc(rec.just)}</div>`:''}<p style="margin-top:6px">${esc(q.f)}</p>${rec&&!rec.ok?`<p class="ans"><b>Respuesta correcta:</b> ${esc(ansText(q))}</p>`:''}</div>`).join('');
   h+=`</div>`;
   if(!me.p.done){
     h+=`<div class="card"><h3>Tu reflexión</h3><p class="msg">Con tus propias palabras. Cada respuesta, mínimo 30 caracteres. Tu docente la leerá.</p>
@@ -459,28 +573,34 @@ function finalHTML(me){
     const total=L.reduce((a,p)=>a+ptsOf(p),0),fin=L.filter(p=>p.done).length;
     h+=`<div class="card" style="border:3px solid var(--ok)"><h2 style="font-size:52px">¡Misión cumplida, ${esc(me.p.name.split(' ')[0])}!</h2>
     <p style="margin-top:8px;max-width:60ch">Tu equipo contuvo la crisis digital: protegió cuentas, frenó el rumor, evaluó fuentes, razonó con un árbol de decisiones y auditó a una IA. Lo importante no son los puntos, es lo que ahora sabes hacer.</p>
-    <p class="mono" style="margin-top:12px">Equipo ${esc(teamName(me.tid))}: ${total} de ${L.length*50} puntos · ${fin} de ${L.length} integrantes terminaron</p>
+    <p class="mono" style="margin-top:12px">Tú: ${ptsOf(me.p)} de 100 · Equipo ${esc(teamName(me.tid))}: ${total} de ${L.length*100} puntos · ${fin} de ${L.length} integrantes terminaron</p>
     <h3 style="margin-top:18px">Lo que te llevas</h3><ul style="margin:6px 0 0;padding-left:20px">${ROOMS.slice(0,5).map(r=>`<li style="margin-bottom:6px"><b>${esc(r.tema)}.</b> ${esc(r.clave)}</li>`).join('')}</ul></div>`;
   }
   return h;
 }
-
-/* ---- docente ---- */
+function justList(p){
+  const res=p.res||{};
+  return Object.keys(res).sort().map(k=>{const m=/^r(\d)q(\d)$/.exec(k);if(!m||!res[k].just)return '';
+    return `<div class="quote"><b>C${m[1]} · P${+m[2]+1}</b> (${res[k].ok?'+'+res[k].pts:'0'} pts): ${esc(res[k].just)}</div>`}).join('');
+}
 function teacherHTML(){
   let totalP=0,done=0;
+  const tt=teamTotals().sort((a,b)=>b.avg-a.avg);
+  const board=tt.length?`<section class="card"><h3>Marcador</h3><div class="scroll"><table><thead><tr><th>Equipo</th><th>Integrantes</th><th>Puntos</th><th>Promedio</th><th>Terminaron</th></tr></thead><tbody>${tt.map(t=>`<tr><td>${esc(t.nm)}</td><td class="mono">${t.n}</td><td class="mono">${t.pts} / ${t.max}</td><td class="mono">${t.avg.toFixed(1)}</td><td class="mono">${t.done}/${t.n}</td></tr>`).join('')}</tbody></table></div></section>`:'';
   const cards=TEAMS.map(([id,nm])=>{
     const L=teamList(id);totalP+=L.length;done+=L.filter(p=>p.done).length;
-    const rows=L.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.done?'Terminó':'Cuarto '+(p.room||1)}</td><td class="mono">${ptsOf(p)}</td><td class="mono">${mmss(secsOf(p))}</td></tr>`).join('')||'<tr><td colspan="4" class="msg">Sin integrantes</td></tr>';
+    const tp=L.reduce((a,p)=>a+ptsOf(p),0);
+    const rows=L.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.done?'Terminó':'Cuarto '+(p.room||1)}</td><td class="mono">${ptsOf(p)}</td><td class="mono">${mmss(secsOf(p))}</td><td>${S.confirmDel===id+'/'+p.id?`<button class="btn" data-act="delp" data-t="${id}" data-p="${esc(p.id)}">Confirmar</button> <button class="btn ghost" data-act="delc">Cancelar</button>`:`<button class="mini" data-act="delp" data-t="${id}" data-p="${esc(p.id)}">Borrar intento</button>`}</td></tr>`).join('')||'<tr><td colspan="5" class="msg">Sin integrantes</td></tr>';
     const keys=[1,2,3,4,5].map(r=>`${r}→${r+1}: <b class="mono">${pw(id,r)}</b>`).join(' · ');
-    const notes=L.filter(p=>p.ainote||p.refl).map(p=>`<div style="margin-top:8px"><b>${esc(p.name)}</b>${p.ainote?`<div class="quote"><b>Verificó en IA:</b> ${esc(p.ainote)}</div>`:''}${p.refl?`<div class="quote"><b>1.</b> ${esc(p.refl.a)}</div><div class="quote"><b>2.</b> ${esc(p.refl.b)}</div><div class="quote"><b>3.</b> ${esc(p.refl.c)}</div>`:''}</div>`).join('');
-    return `<section class="card"><h3>${esc(nm)} <span class="mono" style="font-size:14px;font-family:var(--mono)">${L.length}/${MAXT}</span></h3><div class="scroll"><table><thead><tr><th>Nombre</th><th>Avance</th><th>Pts</th><th>Tiempo</th></tr></thead><tbody>${rows}</tbody></table></div>
+    const notes=L.filter(p=>p.ainote||p.refl||Object.keys(p.res||{}).length).map(p=>`<div style="margin-top:8px"><b>${esc(p.name)}</b>${p.ainote?`<div class="quote"><b>Verificó en IA:</b> ${esc(p.ainote)}</div>`:''}${justList(p)}${p.refl?`<div class="quote"><b>Reflexión 1.</b> ${esc(p.refl.a)}</div><div class="quote"><b>Reflexión 2.</b> ${esc(p.refl.b)}</div><div class="quote"><b>Reflexión 3.</b> ${esc(p.refl.c)}</div>`:''}</div>`).join('');
+    return `<section class="card"><h3>${esc(nm)} <span class="mono" style="font-size:14px;font-family:var(--mono)">${L.length}/${MAXT} · ${tp} pts</span></h3><div class="scroll"><table><thead><tr><th>Nombre</th><th>Avance</th><th>Pts</th><th>Tiempo</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="msg" style="margin-top:8px">Claves de puertas (para destrabar): ${keys}</p>
-    ${notes?`<details data-k="${id}" ${S.open[id]?'open':''}><summary>Hallazgos con IA y reflexiones</summary>${notes}</details>`:''}</section>`}).join('');
+    ${notes?`<details data-k="${id}" ${S.open[id]?'open':''}><summary>Justificaciones, hallazgos con IA y reflexiones</summary>${notes}</details>`:''}</section>`}).join('');
   const joined=new Set();TEAMS.forEach(([id])=>(S.players[id]||[]).forEach(p=>joined.add(String(p.sid))));
   const missing=S.master?Object.keys(S.master).filter(k=>!joined.has(k)).map(k=>S.master[k]):null;
   const mcard=`<section class="card"><h3>Quién falta por entrar</h3><label class="lb" for="mfile" style="margin-top:0">Carga tu archivo maestro (CSV). Se lee solo en este navegador y no se sube a ningún lado.</label><input id="mfile" type="file" accept=".csv">${missing?`<p style="margin-top:10px"><b>${missing.length}</b> sin entrar${missing.length?': '+esc(missing.join(', ')):''}</p>`:''}</section>`;
   return `<div class="tape"></div><div class="wrap"><div class="bar"><div class="brand"><b>PANEL DOCENTE</b><span>${totalP} estudiantes en sala · ${done} terminaron</span></div><div class="row" style="margin:0"><button class="btn ghost" data-act="back">Volver</button></div></div>${errBox()}
-  <div style="display:grid;gap:14px;margin-top:8px">${mcard}${cards}</div>
+  <div style="display:grid;gap:14px;margin-top:8px">${board}${mcard}${cards}</div>
   <div class="card" style="margin-top:14px"><h3>Nueva sesión</h3><p class="msg">Borra a todos los jugadores para empezar con otro grupo.</p>
   <div class="row">${S.confirmReset?'<button class="btn" data-act="reset2">Sí, borrar todo</button><button class="btn ghost" data-act="reset0">Cancelar</button>':'<button class="btn ghost" data-act="reset1">Reiniciar sesión</button>'}</div></div></div><div style="height:40px"></div>`;
 }
@@ -496,7 +616,8 @@ function titleCase(t){return t.replace(/\s+/g,' ').trim().split(' ').map(w=>w.ch
 
 /* ===================== ACCIONES ===================== */
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;act(b.dataset.act,b)});
-document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.in;if(k){S.tmp[k]=e.target.value;if(k==='name'){try{localStorage.setItem('cr_name',e.target.value)}catch(_){}}}});
+document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.just){att(e.target.dataset.just).just=e.target.value;return}
+  const k=e.target.dataset&&e.target.dataset.in;if(k){S.tmp[k]=e.target.value;if(k==='name'){try{localStorage.setItem('cr_name',e.target.value)}catch(_){}}}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){if(e.target.id==='doorIn')act('door');else if(e.target.id==='nm')act('login');else if(e.target.id==='tpw')act('tlogin')}});
 document.addEventListener('change',e=>{
   if(e.target.id!=='mfile'||!e.target.files[0])return;
@@ -509,13 +630,14 @@ document.addEventListener('toggle',e=>{const k=e.target.dataset&&e.target.datase
 
 async function act(a,b){
   const me=findMe();
+  if(a==='check'||a==='nextq'||a==='door')S.notice='';
   if(a==='login'){
     const raw=(S.tmp.name||'').trim();
     const sid=await matchStudent(raw);
     if(!sid){S.joinMsg='No encontré ese nombre. Escribe tu nombre y tu primer apellido, como aparecen en Schoology.';renderAll();return}
     S.sid=sid;S.uid='e'+sid;S.joinMsg='';S.tmp.dname=titleCase(raw);
     try{localStorage.setItem('cr_sid',sid);localStorage.setItem('cr_dname',S.tmp.dname)}catch(_){}
-    S.hadMe=!!findMe();renderAll();return;
+    S.hadMe=!!findMe();setNotice(findMe());renderAll();return;
   }
   if(a==='logout'){S.uid=null;S.sid=null;S.hadMe=false;try{localStorage.removeItem('cr_sid');localStorage.removeItem('cr_dname')}catch(_){}renderAll();return}
   if(a==='tlogin'){
@@ -525,11 +647,21 @@ async function act(a,b){
   }
   if(a==='join'){
     if(!S.uid)return;
+    S.justJoined=true;
     const tid=b.dataset.t,list=S.players[tid]||[];
     if(list.length>=MAXT)return;
     const used=new Set(list.map(p=>p.v));let v=0;while(used.has(v))v++;
     try{await S.db.doc('teams/'+tid+'/players/'+S.uid).set({name:S.tmp.dname||'Alumno',sid:S.sid,v,joinedAt:Date.now(),room:1,res:{},done:false})}
     catch(err){S.err='No pudiste entrar al equipo: '+((err&&err.message)||err)+'. Avisa a tu docente.';renderErr()}
+    return;
+  }
+  if(a==='delc'){S.confirmDel=null;const y=scrollY;renderAll();scrollTo(0,y);return}
+  if(a==='delp'){
+    const k=b.dataset.t+'/'+b.dataset.p;
+    if(S.confirmDel!==k){S.confirmDel=k;const y=scrollY;renderAll();scrollTo(0,y);return}
+    S.confirmDel=null;
+    try{await S.db.doc('teams/'+b.dataset.t+'/players/'+b.dataset.p).delete()}
+    catch(err){S.err='No se pudo borrar el intento: '+((err&&err.message)||err);renderAll()}
     return;
   }
   if(a==='teacher'){S.view='teacher';renderAll();return}
@@ -543,32 +675,37 @@ async function act(a,b){
   }
   if(!me)return;
   const cr=curRoom(me);
+  if(a==='nextq'){S.qi[cr]=1;renderStage();window.scrollTo({top:0,behavior:'smooth'});return}
+  const qi=qiNow(me,cr),key=cr+'.'+qi;
   if(a==='pick'){
-    const q=myQ(cr,me),at=att(cr),i=+b.dataset.i;at.msg='';
+    const q=myQ(cr,me,qi),at=att(key),i=+b.dataset.i;at.msg='';
     if(q.t==='s')at.sel=[i];else at.sel=at.sel.includes(i)?at.sel.filter(x=>x!==i):[...at.sel,i];
     renderStage();return;
   }
   if(a==='mv'){
-    const at=att(cr),i=+b.dataset.i,j=i+ +b.dataset.d;
+    const at=att(key),i=+b.dataset.i,j=i+ +b.dataset.d;
     if(at.order&&j>=0&&j<at.order.length){[at.order[i],at.order[j]]=[at.order[j],at.order[i]];at.msg='';renderStage()}
     return;
   }
   if(a==='check'){
-    const q=myQ(cr,me),at=att(cr);if(at.rec)return;
+    const q=myQ(cr,me,qi),at=att(key);if(at.rec)return;
+    const tx=$('#just');if(tx)at.just=tx.value;
+    if(q.t==='s'&&at.sel.length!==1){at.msg='Elige una opción.';renderStage();return}
+    if(q.t==='m'&&!at.sel.length){at.msg='Marca al menos una opción.';renderStage();return}
+    const wc=(at.just||'').trim().split(/\s+/).filter(Boolean).length;
+    if(wc<8){at.msg='Escribe tu justificación (mínimo 8 palabras) antes de comprobar.';renderStage();return}
     let ok,part=0,total=0;
-    if(q.t==='s'){if(at.sel.length!==1){at.msg='Elige una opción.';renderStage();return}ok=at.sel[0]===q.a}
-    else if(q.t==='m'){if(!at.sel.length){at.msg='Marca al menos una opción.';renderStage();return}
-      part=at.sel.filter(i=>q.a.includes(i)).length;total=q.a.length;ok=part===total&&at.sel.length===total}
+    if(q.t==='s'){ok=at.sel[0]===q.a}
+    else if(q.t==='m'){part=at.sel.filter(i=>q.a.includes(i)).length;total=q.a.length;ok=part===total&&at.sel.length===total}
     else{part=at.order.filter((x,i)=>x===i).length;total=q.o.length;ok=part===total}
     at.tries++;
     if(ok||at.tries>=2){
-      const rec={ok,tries:at.tries,pts:ok?(at.tries===1?10:5):0,sec:Math.round((Date.now()-at.t0)/1000)};
+      const rec={ok,tries:at.tries,pts:ok?(at.tries===1?10:5):0,sec:Math.round((Date.now()-at.t0)/1000),just:(at.just||'').trim().slice(0,700)};
       at.rec=rec;at.msg='';
-      await save({res:{['r'+cr]:rec}});
-      renderStage();renderSide();renderStepper();
+      await save({res:{['r'+cr+'q'+qi]:rec}});
+      renderStage();renderSide();renderStepper();renderHdr();
     }else{
-      if(q.t==='s'){const wrong=q.o.map((_,i)=>i).filter(i=>i!==q.a&&i!==at.sel[0]);at.off=at.sel[0];at.sel=[];
-        at.msg='No es esa. Descarté una opción incorrecta; te queda un intento.';}
+      if(q.t==='s'){at.off=at.sel[0];at.sel=[];at.msg='No es esa. Descarté una opción incorrecta; te queda un intento.'}
       else if(q.t==='m')at.msg=`Tienes ${part} de ${total} correctas y elegiste ${at.sel.length}. Te queda un intento.`;
       else at.msg=`${part} de ${total} pasos están en su lugar. Te queda un intento.`;
       renderStage();
@@ -607,10 +744,20 @@ async function act(a,b){
 let fixing=false;
 function onData(){
   if(S.view==='boot')return;
+  if(S.view==='teacher'){
+    const m0=findMe();
+    if(!!m0!==!!S.hadMe){S.hadMe=!!m0;if(!m0){S.att={};S.qi={};S.localRoom=0;S.localNote=false;S.notice=''}}
+  }
   if(S.view==='teacher'){const y=scrollY;renderAll();scrollTo(0,y);return}
   if(S.view!=='play')return;
   const me=findMe();
-  if(!!me!==!!S.hadMe){S.hadMe=!!me;S.sig=mySig();renderAll();return}
+  if(!!me!==!!S.hadMe){
+    S.hadMe=!!me;S.sig=mySig();
+    if(!me){S.att={};S.qi={};S.localRoom=0;S.localNote=false;S.notice=''}
+    else if(S.justJoined){S.justJoined=false;S.notice=''}
+    else setNotice(me);
+    renderAll();return;
+  }
   if(!me){renderTeams();return}
   // duplicados de caso por entradas simultáneas: el último en llegar cambia
   if(!fixing&&!Object.keys(me.p.res||{}).length){
