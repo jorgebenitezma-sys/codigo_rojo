@@ -484,7 +484,7 @@ function joinHTML(){
    <div><b>Reflexiona</b>Cada cuarto tiene 2 preguntas y debes explicar por qué elegiste tu respuesta. 10 puntos al primer intento, 5 al segundo.</div>
   </div>${errBox()}`;
   if(!S.uid){
-    return head+`<label class="lb" for="nm">Tu nombre y primer apellido, como aparecen en Schoology</label>
+    return head+`<label class="lb" for="nm">Tu nombre y apellido</label>
     <div class="row" style="margin-top:0"><input class="field" id="nm" data-in="name" value="${esc(S.tmp.name||'')}" maxlength="60" autocomplete="off" style="max-width:420px"><button class="btn go" data-act="login">Entrar</button></div>
     <p class="msg bad" id="jmsg" style="margin-top:6px" aria-live="polite">${esc(S.joinMsg)}</p>
     <details style="margin-top:28px"><summary>Acceso docente</summary><div class="row"><input class="field" id="tpw" type="password" data-in="tpw" style="max-width:260px" autocomplete="off" aria-label="Contraseña docente"><button class="btn ghost" data-act="tlogin">Entrar como docente</button></div><p class="msg bad" id="tmsg"></p></details></div><div style="height:48px"></div>`;
@@ -611,7 +611,9 @@ function mySig(){const me=findMe();if(!me)return 'x';return JSON.stringify([curR
 /* ===================== IDENTIDAD ===================== */
 async function sha(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('').slice(0,16)}
 function norm(t){return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
-async function matchStudent(raw){const k=norm(raw);if(k.length<5)return null;try{return window.ROSTER[await sha(ROSTER_SALT+k)]||null}catch(_){return null}}
+async function matchStudent(raw){const k=norm(raw);if(k.length<5)return null;try{const r=window.ROSTER[await sha(ROSTER_SALT+k)];if(r)return r;
+  const w=raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().split(/\s+/).map(x=>x.replace(/[^a-z0-9]/g,'')).filter(Boolean);
+  if(w.length<2)return null;return 'x'+await sha('open|'+w.sort().join(' '))}catch(_){return null}}
 function titleCase(t){return t.replace(/\s+/g,' ').trim().split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ')}
 
 /* ===================== ACCIONES ===================== */
@@ -634,7 +636,7 @@ async function act(a,b){
   if(a==='login'){
     const raw=(S.tmp.name||'').trim();
     const sid=await matchStudent(raw);
-    if(!sid){S.joinMsg='No encontré ese nombre. Escribe tu nombre y tu primer apellido, como aparecen en Schoology.';renderAll();return}
+    if(!sid){S.joinMsg='Escribe tu nombre y al menos un apellido (mínimo dos palabras).';renderAll();return}
     S.sid=sid;S.uid='e'+sid;S.joinMsg='';S.tmp.dname=titleCase(raw);
     try{localStorage.setItem('cr_sid',sid);localStorage.setItem('cr_dname',S.tmp.dname)}catch(_){}
     S.hadMe=!!findMe();setNotice(findMe());renderAll();return;
@@ -785,7 +787,7 @@ async function boot(){
     S.err=(e&&e.code==='config')?'Falta configurar Firebase. Abre firebase-config.js y pega los datos de tu proyecto (pasos en el README).':'No se pudo conectar con la sala. Revisa tu internet y recarga la página. Detalle: '+((e&&e.message)||e);
     S.view='error';renderAll();return;
   }
-  try{const sid=localStorage.getItem('cr_sid');if(sid&&Object.values(window.ROSTER).includes(sid)){S.sid=sid;S.uid='e'+sid;S.tmp.dname=localStorage.getItem('cr_dname')||''}}catch(_){}
+  try{const sid=localStorage.getItem('cr_sid');if(sid&&(sid[0]==='x'||Object.values(window.ROSTER).includes(sid))){S.sid=sid;S.uid='e'+sid;S.tmp.dname=localStorage.getItem('cr_dname')||''}}catch(_){}
   S.view='play';
   let first=0;
   const start=()=>{if(first>=0){first=-1;renderAll()}};
